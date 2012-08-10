@@ -20,59 +20,6 @@
             base.Dispose(disposing);
         }
 
-        IISExpress.IISExpress iis;
-
-        
-        public IISExpressService(string sonfig, string site, string apppool)
-        {
-            this.config = config;
-            this.site = site;
-            this.apppool = apppool;
-        }
-        
-
-        /*
-        protected override void OnStart(string[] args)
-        {
-            iis = IISExpress.IISExpress.Start(@"C:\Users\Administrator\Documents\IISExpress\config\applicationhost.config", @"WebSite1(1)", @"Clr4IntegratedAppPool");
-        }
-
-        protected override void OnStop()
-        {
-            if (iis != null)
-            {
-                iis.Stop();
-            }
-        }
-
-        protected override void OnShutdown()
-        {
-            OnStop();
-        }
-        */
-
-        string config = string.Empty;
-        string site = string.Empty;
-        string apppool = string.Empty;
-
-        public void Start()
-        {
-            //iis = IISExpress.IISExpress.Start(@"C:\Users\Administrator\Documents\IISExpress\config\applicationhost.config", @"WebSite1(1)", @"Clr4IntegratedAppPool");
-            iis = IISExpress.IISExpress.Start(config, site, apppool);
-        }
-
-        public void Stop()
-        {
-            if (iis != null)
-            {
-                iis.Stop();
-            }
-        }
-
-        protected override void OnShutdown()
-        {
-            Stop();
-        }
 
         #region Component Designer generated code
 

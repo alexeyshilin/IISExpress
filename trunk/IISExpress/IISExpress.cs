@@ -43,13 +43,15 @@ namespace IISExpress
             }
         }
 
-        const string IIS_EXPRESS = @"C:\Program Files\IIS Express\iisexpress.exe";
+        //const string IIS_EXPRESS = @"C:\Program Files\IIS Express\iisexpress.exe";
+        const string IIS_EXPRESS = @"c:\Program Files (x86)\IIS Express\iisexpress.exe";
         const string CONFIG = "config";
         const string SITE = "site";
         const string APP_POOL = "apppool";
 
         Process process;
 
+        
         IISExpress(string config, string site, string apppool)
         {
             Config = config;
@@ -74,14 +76,89 @@ namespace IISExpress
                 UseShellExecute = false
             });
         }
+        
+
+        /*
+        IISExpress(string config, string site, string apppool, string iis) : this(config, site, apppool)
+        {
+            IISExpressPath = iis;
+        }
+        */
+
+        
+        IISExpress(string config, string site, string apppool, string iis)
+        {
+            IISExpressPath = iis;
+
+            Config = config;
+            Site = site;
+            AppPool = apppool;
+
+            StringBuilder arguments = new StringBuilder();
+            if (!string.IsNullOrEmpty(Config))
+                arguments.AppendFormat("/{0}:{1} ", CONFIG, Config);
+
+            if (!string.IsNullOrEmpty(Site))
+                arguments.AppendFormat("/{0}:{1} ", SITE, Site);
+
+            if (!string.IsNullOrEmpty(AppPool))
+                arguments.AppendFormat("/{0}:{1} ", APP_POOL, AppPool);
+
+            process = Process.Start(new ProcessStartInfo()
+            {
+                FileName = IISExpressPath,
+                Arguments = arguments.ToString(),
+                RedirectStandardOutput = true,
+                UseShellExecute = false
+            });
+        }
+        
+
+        /*
+        IISExpress(string config, string site, string apppool)
+        {
+            string Config = @"c:\Users\merc\Documents\IISExpress\config\applicationhost.config";
+            string Site = @"MercedesBenzTerminal.example";
+            string AppPool = @"Clr4IntegratedAppPool";
+            string iis= @"c:\Program Files (x86)\IIS Express\iisexpress.exe";
+
+            StringBuilder arguments = new StringBuilder();
+            if (!string.IsNullOrEmpty(Config))
+                arguments.AppendFormat("/{0}:{1} ", CONFIG, Config);
+
+            if (!string.IsNullOrEmpty(Site))
+                arguments.AppendFormat("/{0}:{1} ", SITE, Site);
+
+            if (!string.IsNullOrEmpty(AppPool))
+                arguments.AppendFormat("/{0}:{1} ", APP_POOL, AppPool);
+
+            process = Process.Start(new ProcessStartInfo()
+            {
+                FileName = iis,
+                Arguments = arguments.ToString(),
+                RedirectStandardOutput = true,
+                UseShellExecute = false
+            });
+        }
+
+        IISExpress(string config, string site, string apppool, string iis) : this(config, site, apppool)
+        {
+        }
+        */
 
         public string Config { get; protected set; }
         public string Site { get; protected set; }
         public string AppPool { get; protected set; }
+        public string IISExpressPath { get; protected set; }
 
         public static IISExpress Start(string config, string site, string apppool)
         {
             return new IISExpress(config, site, apppool);
+        }
+
+        public static IISExpress Start(string config, string site, string apppool, string iis)
+        {
+            return new IISExpress(config, site, apppool, iis);
         }
 
         public void Stop()
