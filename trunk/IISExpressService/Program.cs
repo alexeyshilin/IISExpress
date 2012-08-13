@@ -30,10 +30,12 @@ namespace IISExpressService
             }
             catch
             {
+                /*
                 config = @"c:\Users\merc\Documents\IISExpress\config\applicationhost.config";
                 site = @"MercedesBenzTerminal.example";
                 apppool = @"Clr4IntegratedAppPool";
                 iisPath = @"c:\Program Files (x86)\IIS Express\iisexpress.exe";
+                */
             }
 
 

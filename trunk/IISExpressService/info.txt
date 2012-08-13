@@ -1,0 +1,7 @@
+﻿config file location
+
+C:\Users\SomeUserName\Documents\IISExpress\config\applicationhost.config
+
+or
+
+C:\Windows\System32\config\systemprofile\Documents\IISExpress\config\applicationhost.config
